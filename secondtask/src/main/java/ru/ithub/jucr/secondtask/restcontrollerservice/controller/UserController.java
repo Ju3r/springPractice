@@ -1,7 +1,9 @@
-package ru.ithub.jucr.secondtask.restcontrollerservice;
+package ru.ithub.jucr.secondtask.restcontrollerservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ru.ithub.jucr.secondtask.restcontrollerservice.User;
+import ru.ithub.jucr.secondtask.restcontrollerservice.service.UserService;
 
 import java.util.List;
 
