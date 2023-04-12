@@ -1,7 +1,7 @@
 package ru.ithub.jucr.secondtask.restcontrollerservice.service;
 
 import org.springframework.stereotype.Service;
-import ru.ithub.jucr.secondtask.restcontrollerservice.User;
+import ru.ithub.jucr.secondtask.restcontrollerservice.model.User;
 
 import java.util.ArrayList;
 import java.util.List;

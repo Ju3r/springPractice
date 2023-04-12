@@ -1,8 +1,7 @@
 package ru.ithub.jucr.secondtask.restcontrollerservice.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import ru.ithub.jucr.secondtask.restcontrollerservice.User;
+import ru.ithub.jucr.secondtask.restcontrollerservice.model.User;
 import ru.ithub.jucr.secondtask.restcontrollerservice.service.UserService;
 
 import java.util.List;
@@ -10,9 +9,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+    private final UserService userService;
 
-    @Autowired
-    private UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/{id}")
     public User getUserById(@PathVariable Long id) {

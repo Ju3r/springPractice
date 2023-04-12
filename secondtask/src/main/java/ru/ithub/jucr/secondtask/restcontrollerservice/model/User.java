@@ -1,4 +1,4 @@
-package ru.ithub.jucr.secondtask.restcontrollerservice;
+package ru.ithub.jucr.secondtask.restcontrollerservice.model;
 
 public class User {
 
