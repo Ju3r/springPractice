@@ -39,4 +39,21 @@ public class UserController {
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
     }
+
+    @PatchMapping("/{id}")
+    public User patchUser(@PathVariable Long id, @RequestBody User updatedUser) throws Exception {
+        User user = userService.getUserById(id);
+        if (user == null) {
+            throw new Exception();
+        }
+        if (updatedUser.getName() != null) {
+            user.setName(updatedUser.getName());
+        }
+        if (updatedUser.getEmail() != null) {
+            user.setEmail(updatedUser.getEmail());
+        }
+
+        userService.updateUser(user);
+        return user;
+    }
 }
