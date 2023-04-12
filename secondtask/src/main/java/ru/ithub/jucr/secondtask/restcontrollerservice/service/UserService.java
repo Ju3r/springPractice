@@ -47,6 +47,22 @@ public class UserService {
         }
     }
 
+    public User patchUser(Long id, User updatedUser) throws Exception {
+        User user = getUserById(id);
+        if (user == null) {
+            throw new Exception();
+        }
+        if (updatedUser.getName() != null) {
+            user.setName(updatedUser.getName());
+        }
+        if (updatedUser.getEmail() != null) {
+            user.setEmail(updatedUser.getEmail());
+        }
+
+        updateUser(user);
+        return user;
+    }
+
     public void deleteUser(Long userId) {
         users.removeIf(u -> u.getId().equals(userId));
     }
