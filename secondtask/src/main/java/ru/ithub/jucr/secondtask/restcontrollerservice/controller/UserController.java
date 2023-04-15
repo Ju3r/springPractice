@@ -1,13 +1,14 @@
 package ru.ithub.jucr.secondtask.restcontrollerservice.controller;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
-import ru.ithub.jucr.secondtask.restcontrollerservice.model.User;
+import ru.ithub.jucr.secondtask.restcontrollerservice.model.UserDTO;
 import ru.ithub.jucr.secondtask.restcontrollerservice.service.UserService;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class UserController {
     private final UserService userService;
 
@@ -16,24 +17,25 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
+    public UserDTO getUserById(@PathVariable Long id) {
         return userService.getUserById(id);
     }
 
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public List<UserDTO> getAllUsers() {
+        return userService.getAllUsers(PageRequest.of(0, 10)).getContent();
     }
 
     @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
+    public UserDTO createUser(@RequestBody UserDTO userDTO) {
+        return userService.createUser(userDTO);
     }
 
     @PutMapping("/{id}")
-    public void updateUser(@PathVariable Long id, @RequestBody User user) {
-        user.setId(id);
-        userService.updateUser(user);
+    public void updateUser(@PathVariable Long id,
+                           @RequestBody UserDTO userDTO) {
+        userDTO.setId(id);
+        userService.updateUser(userDTO);
     }
 
     @DeleteMapping("/{id}")
@@ -42,8 +44,14 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public void patchUser(@PathVariable Long id, @RequestBody User updatedUser) throws Exception {
-        userService.patchUser(id, updatedUser);
+    public void patchUser(@PathVariable Long id,
+                          @RequestBody UserDTO updatedUserDTO) throws Exception {
+        userService.patchUser(id, updatedUserDTO);
+    }
+
+    @GetMapping("/prefix")
+    public List<UserDTO> getUsersByPrefix(@RequestParam("name") String prefix) {
+        return userService.getUsersByPrefix(prefix);
     }
 
 }

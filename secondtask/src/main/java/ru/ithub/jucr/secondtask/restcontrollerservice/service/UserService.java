@@ -1,70 +1,86 @@
 package ru.ithub.jucr.secondtask.restcontrollerservice.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import ru.ithub.jucr.secondtask.restcontrollerservice.model.User;
+import org.springframework.web.server.ResponseStatusException;
+import ru.ithub.jucr.secondtask.restcontrollerservice.model.UserDTO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
 
-    private List<User> users = new ArrayList<>();
+    private List<UserDTO> userDTOS = new ArrayList<>();
     private Long nextId = 1L;
 
     public UserService() {
         // add some test users to the list
-        users.add(new User(nextId++, "Alice", "alice@example.com"));
-        users.add(new User(nextId++, "Bob", "bob@example.com"));
-        users.add(new User(nextId++, "Charlie", "charlie@example.com"));
+        userDTOS.add(new UserDTO(nextId++, "Alice", "alice@example.com"));
+        userDTOS.add(new UserDTO(nextId++, "Bob", "bob@example.com"));
+        userDTOS.add(new UserDTO(nextId++, "Charlie", "charlie@example.com"));
     }
 
-    public User getUserById(Long userId) {
-        return users.stream()
+    public UserDTO getUserById(Long userId) {
+        Optional<UserDTO> user = userDTOS.stream()
                 .filter(u -> u.getId().equals(userId))
-                .findFirst()
-                .orElse(null);
+                .findFirst();
+        return user.isPresent() ? user.get() : null;
     }
 
-    public List<User> getAllUsers() {
-        return users;
+    public Page<UserDTO> getAllUsers(Pageable pageable) {
+        Page<UserDTO> page = new PageImpl<>(userDTOS, pageable, userDTOS.size());
+        return page;
     }
 
-    public User createUser(User user) {
-        user.setId(nextId++);
-        users.add(user);
-        return user;
+    public UserDTO createUser(UserDTO userDTO) {
+        userDTO.setId(nextId++);
+        userDTOS.add(userDTO);
+        return userDTO;
     }
 
-    public void updateUser(User user) {
-        User existingUser = users.stream()
-                .filter(u -> u.getId().equals(user.getId()))
-                .findFirst()
-                .orElse(null);
-        if (existingUser != null) {
-            existingUser.setName(user.getName());
-            existingUser.setEmail(user.getEmail());
+    public void updateUser(UserDTO userDTO) {
+        Optional<UserDTO> existingUserDTO = userDTOS.stream()
+                .filter(u -> u.getId().equals(userDTO.getId()))
+                .findFirst();
+        existingUserDTO.ifPresent(u -> {
+            u.setName(userDTO.getName());
+            u.setEmail(userDTO.getEmail());
+        });
+    }
+
+    public HttpStatus patchUser(Long id, UserDTO updatedUserDTO) throws Exception {
+        UserDTO userDTO = getUserById(id);
+        if (userDTO == null) {
+            return HttpStatus.NOT_FOUND;
         }
-    }
-
-    public User patchUser(Long id, User updatedUser) throws Exception {
-        User user = getUserById(id);
-        if (user == null) {
-            throw new Exception();
-        }
-        if (updatedUser.getName() != null) {
-            user.setName(updatedUser.getName());
-        }
-        if (updatedUser.getEmail() != null) {
-            user.setEmail(updatedUser.getEmail());
+        if (updatedUserDTO.getName() != null) {
+            userDTO.setName(updatedUserDTO.getName());
         }
 
-        updateUser(user);
-        return user;
+        updateUser(userDTO);
+        return HttpStatus.OK;
     }
 
-    public void deleteUser(Long userId) {
-        users.removeIf(u -> u.getId().equals(userId));
+    public HttpStatus deleteUser(Long userId) {
+        boolean removed = userDTOS.removeIf(u -> u.getId().equals(userId));
+        return removed ? HttpStatus.OK : HttpStatus.NOT_FOUND;
     }
 
+    public List<UserDTO> getUsersByPrefix(String prefix) {
+        List<UserDTO> matchingUsers = userDTOS.stream()
+                .filter(u -> u.getName().startsWith(prefix))
+                .collect(Collectors.toList());
+        if (matchingUsers.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No users found with the given prefix");
+        }
+
+        return matchingUsers;
+    }
 }
