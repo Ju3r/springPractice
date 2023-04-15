@@ -1,4 +1,4 @@
-package ru.ithub.jucr.secondtask.restcontrollerservice.model;
+package ru.ithub.jucr.secondtask.restcontrollerservice.model.dto;
 
 public class UserDTO {
     private Long id;

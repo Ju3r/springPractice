@@ -2,7 +2,7 @@ package ru.ithub.jucr.secondtask.restcontrollerservice.controller;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
-import ru.ithub.jucr.secondtask.restcontrollerservice.model.UserDTO;
+import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.UserDTO;
 import ru.ithub.jucr.secondtask.restcontrollerservice.service.UserService;
 
 import java.util.List;
