@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.UserDTO;
+import ru.ithub.jucr.secondtask.restcontrollerservice.model.exception.HttpStatusEnum;
+import ru.ithub.jucr.secondtask.restcontrollerservice.model.exception.HttpStatusEnumException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,12 @@ public class UserService {
         Optional<UserDTO> user = userDTOS.stream()
                 .filter(u -> u.getId().equals(userId))
                 .findFirst();
-        return user.isPresent() ? user.get() : null;
+
+        if (user.isPresent()){
+            return user.get();
+        } else{
+            throw new HttpStatusEnumException(HttpStatusEnum.NOT_FOUND);
+        }
     }
 
     public Page<UserDTO> getAllUsers(Pageable pageable) {
