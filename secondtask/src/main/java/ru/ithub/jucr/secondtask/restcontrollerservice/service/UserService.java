@@ -46,6 +46,10 @@ public class UserService {
     }
 
     public UserDTO createUser(UserDTO userDTO) {
+        if (userDTOS.stream().anyMatch(u -> u.getEmail().equals(userDTO.getEmail()))) {
+            throw new HttpStatusEnumException(HttpStatusEnum.BAD_REQUEST);
+        }
+
         userDTO.setId(nextId++);
         userDTOS.add(userDTO);
         return userDTO;
