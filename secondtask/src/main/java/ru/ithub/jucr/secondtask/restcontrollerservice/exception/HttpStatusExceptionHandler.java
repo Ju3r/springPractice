@@ -1,20 +1,32 @@
-package ru.ithub.jucr.secondtask.restcontrollerservice.model.exception;
+package ru.ithub.jucr.secondtask.restcontrollerservice.exception;
 
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-@ControllerAdvice
-public class HttpStatusEnumExceptionHandler {
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-    @ExceptionHandler(HttpStatusEnumException.class)
+@RestControllerAdvice
+public class HttpStatusExceptionHandler {
+    @ExceptionHandler(HttpStatusException.class)
     @ResponseBody
-    public ResponseEntity<HttpStatusEnumExceptionResponse> handleHttpStatusEnumException(HttpStatusEnumException ex) {
+    public ResponseEntity<HttpStatusEnumExceptionResponse> handleHttpStatusException(HttpStatusException ex) {
         HttpStatusEnum httpStatusEnum = ex.getHttpStatusEnum();
         HttpStatusEnumExceptionResponse response = new HttpStatusEnumExceptionResponse(httpStatusEnum);
         return new ResponseEntity<>(response, httpStatusEnum.getHttpStatus());
     }
+
+
 
     public static class HttpStatusEnumExceptionResponse {
         private final int status;

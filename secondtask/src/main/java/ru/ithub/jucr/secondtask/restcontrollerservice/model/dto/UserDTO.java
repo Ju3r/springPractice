@@ -1,5 +1,7 @@
 package ru.ithub.jucr.secondtask.restcontrollerservice.model.dto;
 
+import java.util.Date;
+
 public class UserDTO {
     private Long id;
     private String name;

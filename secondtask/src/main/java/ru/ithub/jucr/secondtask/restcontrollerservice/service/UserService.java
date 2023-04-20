@@ -5,10 +5,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.CreateUserDto;
 import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.UserDTO;
-import ru.ithub.jucr.secondtask.restcontrollerservice.model.exception.HttpStatusEnum;
-import ru.ithub.jucr.secondtask.restcontrollerservice.model.exception.HttpStatusEnumException;
+import ru.ithub.jucr.secondtask.restcontrollerservice.exception.HttpStatusEnum;
+import ru.ithub.jucr.secondtask.restcontrollerservice.exception.HttpStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +17,11 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
-
     private List<UserDTO> userDTOS = new ArrayList<>();
+    private List<CreateUserDto> CreateUserDTOS = new ArrayList<>();
     private Long nextId = 1L;
 
     public UserService() {
-        // add some test users to the list
         userDTOS.add(new UserDTO(nextId++, "Alice", "alice@example.com"));
         userDTOS.add(new UserDTO(nextId++, "Bob", "bob@example.com"));
         userDTOS.add(new UserDTO(nextId++, "Charlie", "charlie@example.com"));
@@ -36,39 +35,61 @@ public class UserService {
         if (user.isPresent()){
             return user.get();
         } else{
-            throw new HttpStatusEnumException(HttpStatusEnum.NOT_FOUND);
+            throw new HttpStatusException(HttpStatusEnum.NOT_FOUND);
         }
     }
 
     public Page<UserDTO> getAllUsers(Pageable pageable) {
         Page<UserDTO> page = new PageImpl<>(userDTOS, pageable, userDTOS.size());
+        if(page == null){
+            throw new HttpStatusException(HttpStatusEnum.NOT_FOUND);
+        }
         return page;
     }
 
-    public UserDTO createUser(UserDTO userDTO) {
-        if (userDTOS.stream().anyMatch(u -> u.getEmail().equals(userDTO.getEmail()))) {
-            throw new HttpStatusEnumException(HttpStatusEnum.BAD_REQUEST);
+//    public UserDTO createUser(UserDTO userDTO) {
+//        //Если email уже существует
+//        if (userDTOS.stream().anyMatch(u -> u.getEmail().equals(userDTO.getEmail()))) {
+//            throw new HttpStatusException(HttpStatusEnum.BAD_REQUEST);
+//        }
+//
+//        userDTO.setId(nextId++);
+//        userDTOS.add(userDTO);
+//        return userDTO;
+//    }
+
+    public HttpStatus createUser(CreateUserDto userData){
+        boolean userExists = CreateUserDTOS.stream().anyMatch(u -> u.getName().equals(userData.getName()));
+        if (userExists) {
+            throw new HttpStatusException(HttpStatusEnum.BAD_REQUEST);
         }
 
-        userDTO.setId(nextId++);
-        userDTOS.add(userDTO);
-        return userDTO;
+        CreateUserDto user = new CreateUserDto(userData.getName(), userData.getAge(), userData.getDateOfBirth());
+        CreateUserDTOS.add(user);
+        return HttpStatus.OK;
     }
 
-    public void updateUser(UserDTO userDTO) {
+    public HttpStatus updateUser(UserDTO userDTO) {
         Optional<UserDTO> existingUserDTO = userDTOS.stream()
                 .filter(u -> u.getId().equals(userDTO.getId()))
                 .findFirst();
+
+        if (!existingUserDTO.isPresent()){
+            throw new HttpStatusException(HttpStatusEnum.NOT_FOUND);
+        }
+
         existingUserDTO.ifPresent(u -> {
             u.setName(userDTO.getName());
             u.setEmail(userDTO.getEmail());
         });
+
+        return HttpStatus.OK;
     }
 
     public HttpStatus patchUser(Long id, UserDTO updatedUserDTO) throws Exception {
         UserDTO userDTO = getUserById(id);
         if (userDTO == null) {
-            return HttpStatus.NOT_FOUND;
+            throw new HttpStatusException(HttpStatusEnum.NOT_FOUND);
         }
         if (updatedUserDTO.getName() != null) {
             userDTO.setName(updatedUserDTO.getName());
@@ -80,7 +101,10 @@ public class UserService {
 
     public HttpStatus deleteUser(Long userId) {
         boolean removed = userDTOS.removeIf(u -> u.getId().equals(userId));
-        return removed ? HttpStatus.OK : HttpStatus.NOT_FOUND;
+        if (!removed) {
+            throw new HttpStatusException(HttpStatusEnum.NOT_FOUND);
+        }
+        return HttpStatus.OK;
     }
 
     public List<UserDTO> getUsersByPrefix(String prefix) {
@@ -88,7 +112,7 @@ public class UserService {
                 .filter(u -> u.getName().startsWith(prefix))
                 .collect(Collectors.toList());
         if (matchingUsers.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No users found with the given prefix");
+            throw new HttpStatusException(HttpStatusEnum.NOT_FOUND);
         }
 
         return matchingUsers;

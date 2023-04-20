@@ -1,4 +1,4 @@
-package ru.ithub.jucr.secondtask.restcontrollerservice.model.exception;
+package ru.ithub.jucr.secondtask.restcontrollerservice.exception;
 
 import org.springframework.http.HttpStatus;
 

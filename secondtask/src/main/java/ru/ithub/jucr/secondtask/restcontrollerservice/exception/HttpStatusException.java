@@ -1,9 +1,9 @@
-package ru.ithub.jucr.secondtask.restcontrollerservice.model.exception;
+package ru.ithub.jucr.secondtask.restcontrollerservice.exception;
 
-public class HttpStatusEnumException extends RuntimeException {
+public class HttpStatusException extends RuntimeException {
     private final HttpStatusEnum httpStatusEnum;
 
-    public HttpStatusEnumException(HttpStatusEnum httpStatusEnum) {
+    public HttpStatusException(HttpStatusEnum httpStatusEnum) {
         super(httpStatusEnum.getMessage());
         this.httpStatusEnum = httpStatusEnum;
     }
