@@ -17,7 +17,7 @@ import static org.junit.Assert.assertThrows;
 public class UserServiceTest {
     UserService userService = new UserService();
     @Test
-    public void getUserById_thenReturnUser() {
+    public void getUserById_thenReturnUser_whenUser() {
         Long userId = 1L;
         UserDTO userDTO = userService.getUserById(userId);
 
