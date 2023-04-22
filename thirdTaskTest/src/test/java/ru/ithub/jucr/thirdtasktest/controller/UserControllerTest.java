@@ -1,4 +1,4 @@
-package ru.ithub.jucr.thirdtasktest.test;
+package ru.ithub.jucr.thirdtasktest.controller;
 
 import ru.ithub.jucr.thirdtasktest.controller.UserController;
 import ru.ithub.jucr.thirdtasktest.service.UserService;

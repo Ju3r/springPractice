@@ -1,4 +1,4 @@
-package ru.ithub.jucr.thirdtasktest.test;
+package ru.ithub.jucr.thirdtasktest.service;
 
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
