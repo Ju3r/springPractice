@@ -19,6 +19,7 @@ public class UserServiceTest {
     @Test
     public void getUserById_thenReturnUser_whenUser() {
         Long userId = 1L;
+
         UserDTO userDTO = userService.getUserById(userId);
 
         assertNotNull(userDTO);
@@ -28,6 +29,7 @@ public class UserServiceTest {
     @Test
     public void getUserById_theUserNotFound_whenException() {
         Long invalidUserId = 88L;
+
         assertThrows(HttpStatusException.class, () -> userService.getUserById(invalidUserId));
     }
 
@@ -36,8 +38,8 @@ public class UserServiceTest {
         String dateString = "2024-04-22";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = dateFormat.parse(dateString);
-
         CreateUserDTO createUserDTO = new CreateUserDTO("David", 20, date);
+
         HttpStatus httpStatus = userService.createUser(createUserDTO);
 
         assertEquals(HttpStatus.OK, httpStatus);
@@ -48,8 +50,8 @@ public class UserServiceTest {
         String dateString = "2003-04-22";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = dateFormat.parse(dateString);
-
         CreateUserDTO existingUserDTO = new CreateUserDTO("Alice", 25, date);
+
         assertThrows(HttpStatusException.class, () -> userService.createUser(existingUserDTO));
     }
 }
