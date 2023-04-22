@@ -5,8 +5,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.CreateUserDTO;
-import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.UserDTO;
+import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.exception.CreateUserDTO;
+import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.user.UserDTO;
 import ru.ithub.jucr.secondtask.restcontrollerservice.exception.HttpStatusEnum;
 import ru.ithub.jucr.secondtask.restcontrollerservice.exception.HttpStatusException;
 

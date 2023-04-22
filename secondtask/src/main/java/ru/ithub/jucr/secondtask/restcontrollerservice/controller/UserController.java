@@ -5,8 +5,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.CreateUserDTO;
-import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.UserDTO;
+import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.exception.CreateUserDTO;
+import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.user.UserDTO;
 import ru.ithub.jucr.secondtask.restcontrollerservice.service.UserService;
 
 import java.util.List;

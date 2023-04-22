@@ -1,4 +1,4 @@
-package ru.ithub.jucr.secondtask.restcontrollerservice.model.dto;
+package ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.user;
 
 import java.util.Date;
 

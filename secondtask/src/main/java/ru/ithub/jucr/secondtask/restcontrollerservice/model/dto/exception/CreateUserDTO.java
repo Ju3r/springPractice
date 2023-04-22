@@ -1,4 +1,4 @@
-package ru.ithub.jucr.secondtask.restcontrollerservice.model.dto;
+package ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.exception;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
