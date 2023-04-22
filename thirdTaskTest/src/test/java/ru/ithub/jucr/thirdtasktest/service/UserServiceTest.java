@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import ru.ithub.jucr.thirdtasktest.exception.HttpStatusException;
 import ru.ithub.jucr.thirdtasktest.model.dto.CreateUserDTO;
 import ru.ithub.jucr.thirdtasktest.model.dto.UserDTO;
-import ru.ithub.jucr.thirdtasktest.service.UserService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,7 +17,7 @@ import static org.junit.Assert.assertThrows;
 public class UserServiceTest {
     UserService userService = new UserService();
     @Test
-    public void getUserByIdReturnUser() {
+    public void getUserById_thenReturnUser() {
         Long userId = 1L;
         UserDTO userDTO = userService.getUserById(userId);
 
@@ -27,13 +26,13 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getUserByIdReturnNotFound() {
+    public void getUserById_theNotFound_whenException() {
         Long invalidUserId = 88L;
         assertThrows(HttpStatusException.class, () -> userService.getUserById(invalidUserId));
     }
 
     @Test
-    public void createUserReturnStatusOk() throws ParseException {
+    public void createUser_thenReturnStatusOk() throws ParseException {
         String dateString = "2024-04-22";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = dateFormat.parse(dateString);
@@ -45,7 +44,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void createUserReturnBadRequest() throws ParseException {
+    public void createUser_whenBadRequest_whenException() throws ParseException {
         String dateString = "2003-04-22";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = dateFormat.parse(dateString);
