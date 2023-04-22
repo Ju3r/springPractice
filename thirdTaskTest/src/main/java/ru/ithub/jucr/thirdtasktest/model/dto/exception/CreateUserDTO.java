@@ -1,4 +1,4 @@
-package ru.ithub.jucr.thirdtasktest.model.dto;
+package ru.ithub.jucr.thirdtasktest.model.dto.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

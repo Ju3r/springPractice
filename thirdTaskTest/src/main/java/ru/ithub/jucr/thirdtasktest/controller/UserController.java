@@ -3,8 +3,8 @@ package ru.ithub.jucr.thirdtasktest.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.ithub.jucr.thirdtasktest.model.dto.CreateUserDTO;
-import ru.ithub.jucr.thirdtasktest.model.dto.UserDTO;
+import ru.ithub.jucr.thirdtasktest.model.dto.exception.CreateUserDTO;
+import ru.ithub.jucr.thirdtasktest.model.dto.user.UserDTO;
 import ru.ithub.jucr.thirdtasktest.service.UserService;
 
 import javax.validation.Valid;

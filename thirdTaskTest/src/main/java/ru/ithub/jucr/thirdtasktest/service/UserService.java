@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ru.ithub.jucr.thirdtasktest.exception.HttpStatusEnum;
 import ru.ithub.jucr.thirdtasktest.exception.HttpStatusException;
-import ru.ithub.jucr.thirdtasktest.model.dto.CreateUserDTO;
-import ru.ithub.jucr.thirdtasktest.model.dto.UserDTO;
+import ru.ithub.jucr.thirdtasktest.model.dto.exception.CreateUserDTO;
+import ru.ithub.jucr.thirdtasktest.model.dto.user.UserDTO;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

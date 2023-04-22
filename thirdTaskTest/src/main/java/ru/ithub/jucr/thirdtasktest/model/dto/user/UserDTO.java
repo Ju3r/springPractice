@@ -1,4 +1,4 @@
-package ru.ithub.jucr.thirdtasktest.model.dto;
+package ru.ithub.jucr.thirdtasktest.model.dto.user;
 
 public class UserDTO {
     private Long id;
