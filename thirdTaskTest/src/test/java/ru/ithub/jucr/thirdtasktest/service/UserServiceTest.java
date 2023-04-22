@@ -26,7 +26,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void getUserById_theNotFound_whenException() {
+    public void getUserById_theUserNotFound_whenException() {
         Long invalidUserId = 88L;
         assertThrows(HttpStatusException.class, () -> userService.getUserById(invalidUserId));
     }
