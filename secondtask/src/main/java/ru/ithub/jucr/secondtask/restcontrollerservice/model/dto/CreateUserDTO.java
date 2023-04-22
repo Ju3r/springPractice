@@ -10,7 +10,7 @@ import java.util.Date;
 @Getter
 @Setter
 @AllArgsConstructor
-public class CreateUserDto {
+public class CreateUserDTO {
     @NotBlank(message = "Please enter valid name")
     @Size(min=3, message = "Name should be atleast 3 characters")
     @Size(max=20, message = "Name should not be greater than 20 characters")

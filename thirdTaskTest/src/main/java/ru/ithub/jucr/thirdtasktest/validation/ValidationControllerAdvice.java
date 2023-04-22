@@ -1,4 +1,4 @@
-package ru.ithub.jucr.secondtask.restcontrollerservice.validation;
+package ru.ithub.jucr.thirdtasktest.validation;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;

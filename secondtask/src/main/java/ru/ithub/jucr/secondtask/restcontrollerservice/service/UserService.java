@@ -5,7 +5,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.CreateUserDto;
+import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.CreateUserDTO;
 import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.UserDTO;
 import ru.ithub.jucr.secondtask.restcontrollerservice.exception.HttpStatusEnum;
 import ru.ithub.jucr.secondtask.restcontrollerservice.exception.HttpStatusException;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
     private List<UserDTO> userDTOS = new ArrayList<>();
-    private List<CreateUserDto> CreateUserDTOS = new ArrayList<>();
+    private List<CreateUserDTO> createUserDTOS = new ArrayList<>();
     private Long nextId = 1L;
 
     public UserService() {
@@ -47,25 +47,14 @@ public class UserService {
         return page;
     }
 
-//    public UserDTO createUser(UserDTO userDTO) {
-//        //Если email уже существует
-//        if (userDTOS.stream().anyMatch(u -> u.getEmail().equals(userDTO.getEmail()))) {
-//            throw new HttpStatusException(HttpStatusEnum.BAD_REQUEST);
-//        }
-//
-//        userDTO.setId(nextId++);
-//        userDTOS.add(userDTO);
-//        return userDTO;
-//    }
-
-    public HttpStatus createUser(CreateUserDto userData){
-        boolean userExists = CreateUserDTOS.stream().anyMatch(u -> u.getName().equals(userData.getName()));
+    public HttpStatus createUser(CreateUserDTO userData){
+        boolean userExists = createUserDTOS.stream().anyMatch(u -> u.getName().equals(userData.getName()));
         if (userExists) {
             throw new HttpStatusException(HttpStatusEnum.BAD_REQUEST);
         }
 
-        CreateUserDto user = new CreateUserDto(userData.getName(), userData.getAge(), userData.getDateOfBirth());
-        CreateUserDTOS.add(user);
+        CreateUserDTO user = new CreateUserDTO(userData.getName(), userData.getAge(), userData.getDateOfBirth());
+        createUserDTOS.add(user);
         return HttpStatus.OK;
     }
 

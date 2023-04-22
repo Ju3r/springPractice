@@ -1,4 +1,4 @@
-package ru.ithub.jucr.secondtask.restcontrollerservice.validation;
+package ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.validation;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
