@@ -1,11 +1,7 @@
 package ru.ithub.jucr.secondtask.restcontrollerservice.controller;
 
-import jakarta.validation.Valid;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.exception.CreateUserDTO;
+import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.user.CreateUserDTO;
 import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.user.UserDTO;
 import ru.ithub.jucr.secondtask.restcontrollerservice.service.UserService;
 
@@ -27,12 +23,12 @@ public class UserController {
 
     @GetMapping
     public List<UserDTO> getAllUsers() {
-        return userService.getAllUsers(PageRequest.of(0, 10)).getContent();
+        return userService.getAllUsers();
     }
 
     @PostMapping
-    public ResponseEntity<CreateUserDTO> createUser(@Valid @RequestBody CreateUserDTO userData){
-        return new ResponseEntity<CreateUserDTO>(userData, HttpStatus.CREATED);
+    public CreateUserDTO createUser(@RequestBody CreateUserDTO userData){
+        return new CreateUserDTO(userData);
     }
 
     @PutMapping("/{id}")

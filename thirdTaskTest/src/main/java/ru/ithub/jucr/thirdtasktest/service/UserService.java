@@ -4,40 +4,29 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import ru.ithub.jucr.thirdtasktest.exception.HttpStatusEnum;
 import ru.ithub.jucr.thirdtasktest.exception.HttpStatusException;
-import ru.ithub.jucr.thirdtasktest.model.dto.exception.CreateUserDTO;
+import ru.ithub.jucr.thirdtasktest.model.dto.user.CreateUserDto;
+import ru.ithub.jucr.thirdtasktest.repository.UserRepository;
 import ru.ithub.jucr.thirdtasktest.model.dto.user.UserDTO;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
-    private List<UserDTO> userDTOS = new ArrayList<>();
-    private List<CreateUserDTO> createUserDTOS = new ArrayList<>();
-    private Long nextId = 1L;
 
-    public UserService() {
-        userDTOS.add(new UserDTO(nextId++, "Alice", "alice@example.com"));
-        userDTOS.add(new UserDTO(nextId++, "Bob", "bob@example.com"));
-        userDTOS.add(new UserDTO(nextId++, "Charlie", "charlie@example.com"));
-        String dateString = "2003-04-22";
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private final UserRepository userRepository;
 
-        try {
-            Date date = dateFormat.parse(dateString);
-            createUserDTOS.add(new CreateUserDTO("Alice", 25, date));
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
+
+    public UserDTO getByName(String username) {
+        return userRepository.getUserByName(username)
+                .orElseThrow(() -> new HttpStatusException(HttpStatusEnum.NOT_FOUND));
     }
 
     public UserDTO getUserById(Long userId) {
-        Optional<UserDTO> user = userDTOS.stream()
+        Optional<UserDTO> user = userRepository.getUserDTOS().stream()
                 .filter(u -> u.getId().equals(userId))
                 .findFirst();
 
@@ -48,14 +37,14 @@ public class UserService {
         }
     }
 
-    public HttpStatus createUser(CreateUserDTO userData){
-        boolean userExists = createUserDTOS.stream().anyMatch(u -> u.getName().equals(userData.getName()));
+    public HttpStatus createUser(CreateUserDto userData){
+        boolean userExists = userRepository.getCreateUserDTOS().stream().anyMatch(u -> u.getName().equals(userData.getName()));
         if (userExists) {
             throw new HttpStatusException(HttpStatusEnum.BAD_REQUEST);
         }
 
-        CreateUserDTO user = new CreateUserDTO(userData.getName(), userData.getAge(), userData.getDateOfBirth());
-        createUserDTOS.add(user);
+        CreateUserDto user = new CreateUserDto(userData.getName(), userData.getAge(), userData.getDateOfBirth());
+        userRepository.getCreateUserDTOS().add(user);
         return HttpStatus.OK;
     }
 }

@@ -1,11 +1,8 @@
 package ru.ithub.jucr.secondtask.restcontrollerservice.service;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.exception.CreateUserDTO;
+import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.user.CreateUserDTO;
 import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.user.UserDTO;
 import ru.ithub.jucr.secondtask.restcontrollerservice.exception.HttpStatusEnum;
 import ru.ithub.jucr.secondtask.restcontrollerservice.exception.HttpStatusException;
@@ -39,12 +36,11 @@ public class UserService {
         }
     }
 
-    public Page<UserDTO> getAllUsers(Pageable pageable) {
-        Page<UserDTO> page = new PageImpl<>(userDTOS, pageable, userDTOS.size());
-        if(page == null){
+    public List<UserDTO> getAllUsers() {
+        if (userDTOS.isEmpty()) {
             throw new HttpStatusException(HttpStatusEnum.NOT_FOUND);
         }
-        return page;
+        return userDTOS;
     }
 
     public HttpStatus createUser(CreateUserDTO userData){

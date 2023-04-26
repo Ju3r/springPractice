@@ -1,16 +1,17 @@
-package ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.exception;
+package ru.ithub.jucr.thirdtasktest.model.dto.user;
 
-import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.http.HttpStatus;
 
+import javax.validation.constraints.*;
 import java.util.Date;
 
 @Getter
 @Setter
 @AllArgsConstructor
-public class CreateUserDTO {
+public class CreateUserDto {
     @NotBlank(message = "Please enter valid name")
     @Size(min=3, message = "Name should be atleast 3 characters")
     @Size(max=20, message = "Name should not be greater than 20 characters")
@@ -24,4 +25,8 @@ public class CreateUserDTO {
     @FutureOrPresent(message = "The date of birth must be greater than now")
     @NotNull(message = "Please enter valid date of birth")
     private Date dateOfBirth;
+
+    public CreateUserDto(CreateUserDto userData, HttpStatus created) {
+    }
 }
+

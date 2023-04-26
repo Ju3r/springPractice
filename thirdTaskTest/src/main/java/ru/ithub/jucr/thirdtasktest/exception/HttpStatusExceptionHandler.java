@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.validation.ValidationError;
-import ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.validation.ValidationErrorResponse;
+import ru.ithub.jucr.thirdtasktest.model.dto.validation.ValidationError;
+import ru.ithub.jucr.thirdtasktest.model.dto.validation.ValidationErrorResponse;
 
 import java.util.List;
 import java.util.stream.Collectors;

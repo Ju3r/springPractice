@@ -1,9 +1,8 @@
 package ru.ithub.jucr.thirdtasktest.controller;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.ithub.jucr.thirdtasktest.model.dto.exception.CreateUserDTO;
+import ru.ithub.jucr.thirdtasktest.model.dto.user.CreateUserDto;
 import ru.ithub.jucr.thirdtasktest.model.dto.user.UserDTO;
 import ru.ithub.jucr.thirdtasktest.service.UserService;
 
@@ -24,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<CreateUserDTO> createUser(@Valid @RequestBody CreateUserDTO userData){
-        return new ResponseEntity<CreateUserDTO>(userData, HttpStatus.CREATED);
+    public CreateUserDto createUser(@Valid @RequestBody CreateUserDto userData){
+        return new CreateUserDto(userData, HttpStatus.CREATED);
     }
 }

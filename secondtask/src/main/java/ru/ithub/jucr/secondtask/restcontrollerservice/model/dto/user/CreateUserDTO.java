@@ -1,4 +1,4 @@
-package ru.ithub.jucr.thirdtasktest.model.dto.exception;
+package ru.ithub.jucr.secondtask.restcontrollerservice.model.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,5 +24,7 @@ public class CreateUserDTO {
     @FutureOrPresent(message = "The date of birth must be greater than now")
     @NotNull(message = "Please enter valid date of birth")
     private Date dateOfBirth;
-}
 
+    public CreateUserDTO(CreateUserDTO userData) {
+    }
+}
