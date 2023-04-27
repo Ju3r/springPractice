@@ -1,5 +1,4 @@
-package ru.ithub.jucr.thirdtasktest.model.dto.user;
-
+package ru.ithub.jucr.modulefour.model.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class UserDTO {
+public class UserDto {
     private Long id;
     private String name;
     private String email;

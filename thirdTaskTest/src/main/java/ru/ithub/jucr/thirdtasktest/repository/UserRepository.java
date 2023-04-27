@@ -1,9 +1,9 @@
 package ru.ithub.jucr.thirdtasktest.repository;
 
 import lombok.Getter;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import ru.ithub.jucr.thirdtasktest.model.dto.user.CreateUserDto;
-import ru.ithub.jucr.thirdtasktest.model.dto.user.UserDTO;
+import ru.ithub.jucr.thirdtasktest.model.dto.user.UserDto;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -12,16 +12,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@Service
 @Getter
 public class UserRepository {
-    private List<UserDTO> userDTOS = new ArrayList<>();
+    private List<UserDto> userDtos = new ArrayList<>();
     private List<CreateUserDto> createUserDTOS = new ArrayList<>();
     private Long nextId = 1L;
-    public UserRepository() {
-        userDTOS.add(new UserDTO(nextId++, "Alice", "alice@example.com"));
-        userDTOS.add(new UserDTO(nextId++, "Bob", "bob@example.com"));
-        userDTOS.add(new UserDTO(nextId++, "Charlie", "charlie@example.com"));
+
+    {
+        userDtos.add(new UserDto(nextId++, "Alice", "alice@example.com"));
+        userDtos.add(new UserDto(nextId++, "Bob", "bob@example.com"));
+        userDtos.add(new UserDto(nextId++, "Charlie", "charlie@example.com"));
 
         String dateString = "2003-04-22";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -34,11 +35,13 @@ public class UserRepository {
         }
     }
 
-    public Optional<UserDTO> getUserById(Long userId) {
-        return userDTOS.stream().filter(u -> u.getId().equals(userId)).findFirst();
+    public UserRepository() {}
+
+    public Optional<UserDto> getUserById(Long userId) {
+        return userDtos.stream().filter(u -> u.getId().equals(userId)).findFirst();
     }
 
-    public Optional<UserDTO> getUserByName(String username) {
-        return userDTOS.stream().filter(s -> s.getName().equals(username)).findFirst();
+    public Optional<UserDto> getUserByName(String username) {
+        return userDtos.stream().filter(s -> s.getName().equals(username)).findFirst();
     }
 }

@@ -1,10 +1,11 @@
-package ru.ithub.jucr.thirdtasktest;
+package ru.ithub.jucr.modulefive;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ThirdTaskTestApplicationTests {
+class ModuleFiveApplicationTests {
+
     @Test
     void contextLoads() {
     }

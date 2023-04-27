@@ -1,10 +1,10 @@
-package ru.ithub.jucr.thirdtasktest.controller;
+package ru.ithub.jucr.modulefour.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.ithub.jucr.thirdtasktest.model.dto.user.CreateUserDto;
-import ru.ithub.jucr.thirdtasktest.model.dto.user.UserDto;
-import ru.ithub.jucr.thirdtasktest.service.UserService;
+import ru.ithub.jucr.modulefour.model.dto.CreateUserDto;
+import ru.ithub.jucr.modulefour.model.dto.UserDto;
+import ru.ithub.jucr.modulefour.service.UserService;
 
 import javax.validation.Valid;
 

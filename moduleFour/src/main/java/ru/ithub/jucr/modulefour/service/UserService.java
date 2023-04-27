@@ -1,18 +1,17 @@
-package ru.ithub.jucr.thirdtasktest.service;
+package ru.ithub.jucr.modulefour.service;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import ru.ithub.jucr.thirdtasktest.exception.HttpStatusEnum;
-import ru.ithub.jucr.thirdtasktest.exception.HttpStatusException;
-import ru.ithub.jucr.thirdtasktest.model.dto.user.CreateUserDto;
-import ru.ithub.jucr.thirdtasktest.repository.UserRepository;
-import ru.ithub.jucr.thirdtasktest.model.dto.user.UserDto;
+import ru.ithub.jucr.modulefour.exception.HttpStatusEnum;
+import ru.ithub.jucr.modulefour.exception.HttpStatusException;
+import ru.ithub.jucr.modulefour.model.dto.CreateUserDto;
+import ru.ithub.jucr.modulefour.model.dto.UserDto;
+import ru.ithub.jucr.modulefour.repository.UserRepository;
 
 import java.util.Optional;
 
 @Service
 public class UserService {
-
     private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
@@ -46,5 +45,11 @@ public class UserService {
         CreateUserDto user = new CreateUserDto(userData.getName(), userData.getAge(), userData.getDateOfBirth());
         userRepository.getCreateUserDTOS().add(user);
         return HttpStatus.OK;
+    }
+
+    public UserDto get(String username) {
+        return userRepository.getUserByName(username)
+                .orElseThrow(() -> new HttpStatusException(HttpStatusEnum.NOT_FOUND));
+
     }
 }

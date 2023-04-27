@@ -1,13 +1,16 @@
 package ru.ithub.jucr.thirdtasktest.service;
 
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import ru.ithub.jucr.thirdtasktest.exception.HttpStatusException;
 import ru.ithub.jucr.thirdtasktest.model.dto.user.CreateUserDto;
+import ru.ithub.jucr.thirdtasktest.model.dto.user.UserDto;
 import ru.ithub.jucr.thirdtasktest.repository.UserRepository;
-import ru.ithub.jucr.thirdtasktest.model.dto.user.UserDTO;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,37 +19,22 @@ import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
-import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
 
-@SpringBootTest
+
+@ExtendWith(MockitoExtension.class)
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 public class UserServiceTest {
-    @MockBean
-    private UserRepository userRepository = new UserRepository();
-    private UserService userService = new UserService(userRepository);
-
-//    @Test
-//    public void getUserById_whenUserExists_thenUser() {
-//        Long id = 1L;
-//
-//        UserDTO expectedUser = UserDTO.builder()
-//                .id(1L)
-//                .name("test")
-//                .email("test@mail.com")
-//                .build();
-//
-//        when(userRepository.getUserById(id))
-//                .thenReturn(Optional.of(expectedUser));
-//
-//        UserDTO actualUser = userService.getUserById(id);
-//
-//        assertEquals(expectedUser, actualUser);
-//    }
+    @Mock
+    private UserRepository userRepository;
+    @InjectMocks
+    private UserService userService;
 
     @Test
     public void getUserByName_whenUserExists_thenUser() {
         String name = "Katya";
-        UserDTO expectedUser = UserDTO.builder()
+        UserDto expectedUser = UserDto.builder()
                 .id(1L)
                 .name("Katya")
                 .email("test@mail.com")
@@ -55,7 +43,7 @@ public class UserServiceTest {
         when(userRepository.getUserByName(eq(name)))
                 .thenReturn(Optional.of(expectedUser));
 
-        UserDTO actualUser = userService.getByName(name);
+        UserDto actualUser = userService.getByName(name);
         assertEquals(expectedUser, actualUser);
     }
 
